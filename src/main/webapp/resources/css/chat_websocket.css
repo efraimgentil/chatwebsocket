@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+#chat-container {
+	width: 500px;
+	height: 100px;
+	border: 1px solid black;
+	display: block;
+	overflow: auto;
+}
+
+#chat-area {
+	position: relative;
+	vertical-align: bottom;
+	display: table-cell !important;
+	height: inherit;
+}
+
+#chat-area p {
+	margin: 0;
+}
+
+.sistema{
+	color: green;
+}
+
+.publica{
+	color: black;
+}
+
+.privada{
+	color: purple;
+}
