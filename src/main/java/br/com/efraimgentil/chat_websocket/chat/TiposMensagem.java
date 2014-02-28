@@ -1,4 +1,4 @@
-package br.com.efraimgentil.chat_websocket.websocket;
+package br.com.efraimgentil.chat_websocket.chat;
 
 public enum TiposMensagem {
     

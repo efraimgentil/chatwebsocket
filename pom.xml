@@ -55,7 +55,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>

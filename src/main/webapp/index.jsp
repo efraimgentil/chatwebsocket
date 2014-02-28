@@ -58,6 +58,11 @@
         		 chat.enviarMensagem( textarea.value );
         		 textarea.value = "";
         	 };
+        	 
+        	 window.onbeforeunload = function(){
+        		 console.log(" THERE SOMETHING WRONG ");
+        		 return confirm;
+        	 };
          };
          
          function Chat(){
