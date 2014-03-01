@@ -12,6 +12,8 @@ import javax.json.Json;
 import javax.json.stream.JsonGenerator;
 import javax.websocket.Session;
 
+import br.com.efraimgentil.chat_websocket.chat.exception.SemDestinatarioException;
+import br.com.efraimgentil.chat_websocket.chat.exception.SessaoDestinoNaoEncontrada;
 import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
 
 /**
@@ -19,13 +21,14 @@ import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
  * @author Efraim Gentil (efraim.gentil@gmail.com)
  */
 public class Chat {
-    
+
     public static final String ATTR_USUARIO = "usuario";
-    public static Map<String, Session> usernameSession = new LinkedHashMap<>();
-    
+    public static final String NO_USERNAME = "";
+//    public static Map<String, Session> usernameSession = new LinkedHashMap<>();
+
     private final Pattern patternUsuarioDestino = Pattern
-            .compile("^\\\\.[\\w\\.]+");
-    private final String NO_USERNAME = "";
+            .compile("^\\\\[\\w\\.]+");
+
     private final UsuarioPool usuarioPool;
     private FormatadorMensagem formatadorMensagem;
 
@@ -52,18 +55,23 @@ public class Chat {
 
     protected void enviarMensagemBoasVindas(String usuario, Session session)
             throws IOException {
-        Set<Session> sessions = session.getOpenSessions();
-        sessions.remove(session);
-        String mensagem = usuario + " conectou";
         session.getBasicRemote().sendText(
                 formataMensagemToJson("Conectou com sucesso", NO_USERNAME,
                         TiposMensagem.SISTEMA));
+        Set<Session> sessions = sessoesParaAvisoDeConexao(session);
+        String mensagem = usuario + " conectou";
         broadcastMessage(
                 formataMensagemToJson(mensagem, NO_USERNAME,
                         TiposMensagem.SISTEMA), sessions);
     }
 
-    public void trataRecebimentoMensagem(String mensagem, Session session) {
+    protected Set<Session> sessoesParaAvisoDeConexao(Session session) {
+        Set<Session> sessions = session.getOpenSessions();
+        sessions.remove(session);
+        return sessions;
+    }
+
+    public void trataRecebimentoMensagem(String mensagem, Session session) throws IOException {
         String username = getNomeUsuario(session);
         if (isMensagemPrivada(mensagem)) {
             enviaMensagemPrivada(mensagem, session);
@@ -78,36 +86,46 @@ public class Chat {
         return patternUsuarioDestino.matcher(mensagem).find();
     }
 
-    protected void enviaMensagemPrivada(String mensagem, Session session) {
+    protected void enviaMensagemPrivada(String mensagem, Session session)
+            throws IOException {
         String username = getNomeUsuario(session);
-        String usuarioDestino = getDestinatarioMensagemPrivada(mensagem);
-        Session sessionDestino = usernameSession.get(usuarioDestino);
         try {
+            String usuarioDestino = getDestinatarioMensagemPrivada(mensagem);
+            Session sessionDestino = usuarioPool.sessaoDoUsuario( usuarioDestino );
             if (sessionDestino != null) {
                 mensagem = mensagem.replace("\\" + usuarioDestino, "");
                 mensagem = formataMensagemToJson(mensagem, username,
                         TiposMensagem.PRIVADA);
                 sessionDestino.getBasicRemote().sendText(mensagem);
                 session.getBasicRemote().sendText(mensagem);
+            }else{
+                throw new SessaoDestinoNaoEncontrada();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SemDestinatarioException sde) {
+            session.getBasicRemote().sendText(
+                    formataMensagemToJson( "Usuário de destino não encontrado" , username,
+                            TiposMensagem.SISTEMA));
+        } catch (SessaoDestinoNaoEncontrada e) {
+            session.getBasicRemote().sendText(
+                    formataMensagemToJson( "Desculpe mas é provavel que o usuario esteja offline" , username,
+                            TiposMensagem.SISTEMA));
         }
     }
 
-    protected String getDestinatarioMensagemPrivada(String mensagem) {
+    protected String getDestinatarioMensagemPrivada(String mensagem)
+            throws SemDestinatarioException {
         Matcher m = patternUsuarioDestino.matcher(mensagem);
         if (m.find()) {
             String destinatario = m.group();
             return destinatario.substring(1, destinatario.length());
         }
-        return "";
+        throw new SemDestinatarioException();
     }
 
     public void desconectarUsuario(Session session) {
-        String username = getNomeUsuario(session);
-        usernameSession.remove(username);
-        String mensagem = formataMensagemToJson(username + " saiu",
+        String usuario = getNomeUsuario(session);
+        usuarioPool.remover(usuario);
+        String mensagem = formataMensagemToJson(usuario + " saiu",
                 NO_USERNAME, TiposMensagem.SISTEMA);
         broadcastMessage(mensagem, session.getOpenSessions());
     }

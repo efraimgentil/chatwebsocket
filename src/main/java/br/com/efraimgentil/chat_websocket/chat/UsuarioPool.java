@@ -29,5 +29,13 @@ public class UsuarioPool {
         usernameSession.put(usuario, session);
     }
     
+    public void remover(String usuario){
+        usernameSession.remove(usuario);
+    }
+    
+    public Session sessaoDoUsuario(String usuario){
+        return usernameSession.get(usuario);
+    }
+    
     
 }

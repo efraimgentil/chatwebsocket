@@ -46,7 +46,11 @@ public class ChatServerEndpoint {
     
     @OnMessage
     public void mensagem(String mensagem , Session userSession){
-        chat.trataRecebimentoMensagem(mensagem, userSession );
+        try {
+            chat.trataRecebimentoMensagem(mensagem, userSession );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     @OnClose

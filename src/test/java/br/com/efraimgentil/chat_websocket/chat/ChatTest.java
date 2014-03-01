@@ -2,7 +2,10 @@ package br.com.efraimgentil.chat_websocket.chat;
 
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.websocket.RemoteEndpoint;
 import javax.websocket.RemoteEndpoint.Basic;
@@ -14,10 +17,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import br.com.efraimgentil.chat_websocket.chat.exception.SemDestinatarioException;
 import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
+/**
+ * 
+ * @author Efraim Gentil (efraim.gentil@gmail.com)
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class ChatTest {
     
@@ -82,5 +90,80 @@ public class ChatTest {
         verify( userProperties, times(1) ).put(  Chat.ATTR_USUARIO ,  USUARIO);
     }
     
+    @Test
+    public void dadoUmUsuarioEASessaoDeveEnviarMensagemDeBoasVindasParaOMesmo () throws IOException{
+        final String USUARIO = "USUARIO_CHAT";
+        Basic remote = mock( Basic.class ); 
+        when( session.getOpenSessions() ).thenReturn( new LinkedHashSet<Session>() );
+        when( session.getBasicRemote() ).thenReturn( remote );
+        
+        chat.enviarMensagemBoasVindas( USUARIO , session);
+        
+        verify( formatador , atLeastOnce() ).formatar( "Conectou com sucesso" , Chat.NO_USERNAME , TiposMensagem.SISTEMA.toString() );
+        verify( remote , times(1) ).sendText( anyString() );
+    }
     
+    @Test
+    public void dadoUmUsuarioEASessaoDeveEnviarAvisoQueUsuarioSeConectouParaAsOutrasSessoesAbertas() throws IOException{
+        final String USUARIO = "USUARIO_CHAT";
+        Basic remote = mock( Basic.class ); 
+        Set<Session> sessoes = new LinkedHashSet<Session>();
+        Session otherUserSession = mock(Session.class);
+        sessoes.add( otherUserSession );
+        when( session.getOpenSessions() ).thenReturn( sessoes );
+        when( session.getBasicRemote() ).thenReturn( remote );
+        when( otherUserSession.getBasicRemote() ).thenReturn( remote );
+        
+        chat.enviarMensagemBoasVindas( USUARIO , session);
+        
+        verify( formatador , atLeastOnce() ).formatar( USUARIO + " conectou" , Chat.NO_USERNAME , TiposMensagem.SISTEMA.toString() );
+        verify( remote , times(2) ).sendText( anyString() );
+    }
+    
+    @Test
+    public void dadoUmaSessaoDeveRetornarOutrasSessoesAbertasExluindoASessaoDada() throws IOException{
+        final String USUARIO = "USUARIO_CHAT";
+        Set<Session> sessoes = mock(Set.class);
+        when( session.getOpenSessions() ).thenReturn( sessoes );
+        
+        chat.sessoesParaAvisoDeConexao(session);
+        
+        verify( sessoes , times(1) ).remove(session);
+    }
+    
+    @Test
+    public void dadoUmaMensagemPrivadaDeveRetornarTrue(){
+        String mensagemPrivada = "\\usuarioQualquer mensagem privada";
+        
+        boolean eMensagemPrivada = chat.isMensagemPrivada(mensagemPrivada);
+        
+        assertTrue("Deveria retornar confirmacao que é uma mensagem privada", eMensagemPrivada);
+    }
+    
+    @Test
+    public void dadoUmaMensagemPublicaDeveRetornarFalse(){
+        String mensagemPrivada = "mensagem privada";
+        
+        boolean eMensagemPrivada = chat.isMensagemPrivada(mensagemPrivada);
+        
+        assertFalse("Deveria retornar que não é uma mensagem privada", eMensagemPrivada);
+    }
+    
+    @Test
+    public void dadoUmaMensagemPrivadaDeveRetornarONomeDoUsuarioDeDestinatario() throws SemDestinatarioException{
+        String USUARIO  = "usuarioQualquer";
+        String mensagemPrivada = "\\" + USUARIO + " mensagem privada";
+        
+        String usuarioDestinatario = chat.getDestinatarioMensagemPrivada(mensagemPrivada);
+        
+        assertEquals("Deveria retornar o usuário destinatario da mensagem", USUARIO , usuarioDestinatario);
+    }
+    
+    @Test(expected = SemDestinatarioException.class)
+    public void dadoUmMensagemPrivadaQueNaoSejaPossivelExtrairOUsuarioDestinoDeveLancarExecao() throws SemDestinatarioException{
+        String USUARIO  = "";
+        String mensagemPrivada = "\\" + USUARIO + " mensagem privada";
+        
+        String usuarioDestinatario = chat.getDestinatarioMensagemPrivada(mensagemPrivada);
+    }
 }
