@@ -23,7 +23,6 @@ public class MyEndpoint {
   }
   
 }
-
 ```
 
 ## Tecnologies in use
