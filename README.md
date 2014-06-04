@@ -5,7 +5,9 @@ A simple chat created using JavaEE7 Websocket Specification
 
 ## Why use websockets
 
-After the initial handshake a channel of communication will be open between the server and the client. A communication event ( like a message or status update as example) can be shot by both ways, from the server or from the client, with that the client wont need to ask ( make requests ) if there any modification in the server, the server notify the client when necessary.
+In a application that need real time information in the web, you need a way to update your client with this information, without relying on a pool of requests to verify if a status change, why not wait for the server to notify your application with that change and your client side application will just handle this change.
+
+The client will connect in your server and after the initial handshake a channel of communication will be open between the server and the client. A communication event ( like a message or status update as example) can be shot by both ways, from the server or from the client, with that the client wont need to ask ( make requests ) if there any modification in the server, the server notify the client when necessary.
 
 
 ## Creating a websocket server endpoint
