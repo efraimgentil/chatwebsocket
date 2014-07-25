@@ -66,7 +66,7 @@
          };
          
          function Chat(){
-        	 this.wsUri = "ws://" + location.host + "/" + location.pathname + "/chat"; 
+        	 this.wsUri = "ws://" + location.host + "${pageContext.request.contextPath}/chat"; 
 
         	 this.conectar = function(usuario){
         		 this.websocket = new WebSocket(this.wsUri + "/" + usuario);

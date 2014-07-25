@@ -1,122 +1,134 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.com.efraimgentil</groupId>
-	<artifactId>chat_websocket</artifactId>
-	<version>1.0.0</version>
-	<packaging>war</packaging>
-	<name>chatwebsocket</name>
-	<description>Implementação da especificação JSR 356 para criação de um chat online atraves de websockets</description>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>br.com.efraimgentil</groupId>
+  <artifactId>chat_websocket</artifactId>
+  <version>1.0.0</version>
+  <packaging>war</packaging>
+  <name>chatwebsocket</name>
+  <description>Implementação da especificação JSR 356 para criação de um chat online atraves de websockets</description>
 
-     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+
+  <developers>
+    <developer>
+      <name>Efraim Gentil</name>
+      <email>efraim.gentil@gmail.com</email>
+      <roles>
+        <role>Mestre dos Magos</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+      <version>7.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.8.4</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <resources>
+      <resource>
+        <directory>
+                    src/main/resources
+                </directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>devv</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+
+    <profile>
+      <!-- When built in OpenShift the 'openshift' profile will be used when 
+        invoking mvn. -->
+      <!-- Use this profile for any OpenShift specific customization your 
+        app will need. -->
+      <!-- By default that is to put the resulting archive into the 'deployments' 
+        folder. -->
+      <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+      <id>openshift</id>
+      <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.executable>${env.OPENSHIFT_WILDFLY_DIR}usr/lib/jvm/jdk1.8.0_05/bin/javac</maven.compiler.executable>
         <maven.compiler.fork>true</maven.compiler.fork>
-    </properties>
-
-
-	<developers>
-		<developer>
-			<name>Efraim Gentil</name>
-			<email>efraim.gentil@gmail.com</email>
-			<roles>
-				<role>Mestre dos Magos</role>
-			</roles>
-		</developer>
-	</developers>
-
-	<dependencies>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>7.0</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.8.4</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
-
-		<resources>
-			<resource>
-				<directory>
-                    src/main/resources
-                </directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-	</build>
-
-    <profiles>
-    <profile>
-     <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
-     <!-- Use this profile for any OpenShift specific customization your app will need. -->
-     <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
-     <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-     <id>openshift</id>
-     <build>
+      </properties>
+      <build>
         <finalName>chatwebsocket</finalName>
         <plugins>
           <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <outputDirectory>deployments</outputDirectory>
-                      <warName>ROOT</warName>
-                </configuration>
-            </plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+              <failOnMissingWebXml>false</failOnMissingWebXml>
+              <outputDirectory>deployments</outputDirectory>
+              <warName>ROOT</warName>
+            </configuration>
+          </plugin>
         </plugins>
       </build>
     </profile>
