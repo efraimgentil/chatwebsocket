@@ -5,13 +5,12 @@
   <artifactId>chat_websocket</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
-  <name>chatwebsocket</name>
+  <name>majula</name>
   <description>Implementação da especificação JSR 356 para criação de um chat online atraves de websockets</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
 
   <developers>
     <developer>
