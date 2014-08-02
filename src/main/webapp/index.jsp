@@ -34,8 +34,11 @@
     <script type="text/javascript">
          window.onload = function(){
         	 var chat = null; 
+        	 var hostPath = location.host;
+        	 var isRuningOnOpenshift = hostPath.indexOf("rhcloud.com") >= 0;
         	 
         	 var btnConectar = document.getElementById("btn-conectar");
+        	 
         	 btnConectar.onclick = function(){
         		var usuario = prompt("Conectar com qual nome ?",null);
         		chat = new Chat();
@@ -66,7 +69,8 @@
          };
          
          function Chat(){
-        	 this.wsUri = "ws://" + location.host + "${pageContext.request.contextPath}/chat"; 
+             this.port = isRuningOnOpenshift ? 8000 : 8080;
+        	 this.wsUri = "ws://" + location.host + + ":" + this.port + "${pageContext.request.contextPath}/chat"; 
 
         	 this.conectar = function(usuario){
         		 this.websocket = new WebSocket(this.wsUri + "/" + usuario);
