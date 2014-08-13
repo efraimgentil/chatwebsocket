@@ -20,42 +20,43 @@ import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
  */
 @ServerEndpoint("/chat/{user_name}")
 public class ChatServerEndpoint {
-    
-    private Chat chat;
-    
-    public ChatServerEndpoint() {
-        chat = new Chat();
+
+  private Chat chat;
+
+  public ChatServerEndpoint() {
+    chat = new Chat();
+  }
+
+  public ChatServerEndpoint(Chat chat) {
+    this.chat = chat;
+  }
+
+  @OnOpen
+  public void abrir(@PathParam("user_name") String usuario, Session session) {
+    try {
+      try {
+        chat.conectarUsuario(usuario, session);
+      } catch (UsuarioEmUsoException e) {
+        session.close(new CloseReason(CloseCodes.VIOLATED_POLICY,
+            "Desculpe mas o usuario informado já está em uso"));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    
-    public ChatServerEndpoint(Chat chat) {
-        this.chat = chat;
+  }
+
+  @OnMessage
+  public void mensagem(String mensagem, Session userSession) {
+    try {
+      chat.trataRecebimentoMensagem(mensagem, userSession);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    
-    @OnOpen
-    public void abrir(@PathParam("user_name") String usuario,  Session session){
-        try{
-            try {
-                chat.conectarUsuario(usuario, session);
-            } catch (UsuarioEmUsoException e) {
-                session.close( new CloseReason( CloseCodes.VIOLATED_POLICY  , "Desculpe mas o usuario informado já está em uso") );
-            }
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    @OnMessage
-    public void mensagem(String mensagem , Session userSession){
-        try {
-            chat.trataRecebimentoMensagem(mensagem, userSession );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    @OnClose
-    public void fechar(Session userSession){
-        chat.desconectarUsuario(userSession);
-    }
-    
+  }
+
+  @OnClose
+  public void fechar(Session userSession) {
+    chat.desconectarUsuario(userSession);
+  }
+
 }

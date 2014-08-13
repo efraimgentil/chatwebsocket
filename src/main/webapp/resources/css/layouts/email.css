@@ -11,6 +11,10 @@ a {
 	color: #1b98f8;
 }
 
+.hidden{
+	display: none !important;
+}
+
 .button-success, .button-error, .button-warning, .button-secondary {
 	color: white;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -221,6 +225,36 @@ a {
 	height: 40px;
 }
 
+
+/*
+ * -- TABLET (AND UP) MEDIA QUERIES --
+ * On tablets and other medium-sized devices, we want to customize some
+ * of the mobile styles.
+ */
+@media ( max-width : 39em) {
+	
+	input{
+	   width: 100%;
+	   padding-right: 1em;
+	   padding-left: 1em;
+	}
+	#login{
+	   margin: 0.5em !important;
+	}
+	
+	button{
+	   margin-top: 0.3em;
+       display: block;
+       width : 100%;
+       font-size: 125% !important;
+	}
+	
+	#btn-already-signed , #btn-not-signed{
+	   
+	}
+	
+}
+
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
@@ -279,6 +313,12 @@ a {
  * of the mobile styles.
  */
 @media ( min-width : 60em) {
+	#login{
+	   width: 600px;
+	   position: absolute;
+	   left: 50%;
+	   margin-left: -300px;
+	}
 	/* This will take up the entire height, and be a little thinner */
 	#list {
 		margin-left: -500px;

@@ -15,14 +15,16 @@
 </head>
 <body>
 	<div class="content pure-g">
-		<div class="pure-u-1-3"></div>
-		<div id="main" class="pure-u-1-3">
-			<h1 class="email-content-title">Hello there are you already
-				signed in?</h1>
-			<button class="button-success pure-button">Yes</button>
-			<button class="button-error pure-button">No</button>
+		<div id="login" class="pure-u-1">
+		    <h1 >Chat with WebSocket</h1>
+		    <hr/>
+		    <div id="initialQuestion">
+				<h3 class="email-content-title">Hello there are you already signed in?</h3>
+				<button id="btn-already-signed" class="button-success pure-button">Yes</button>
+				<button id="btn-not-signed" class="button-error pure-button">No</button>
+			</div>
 
-			<form class="pure-form pure-form-stacked">
+			<form id="form-singin" class="pure-form pure-form-stacked hidden">
 				<fieldset>
 					<legend>Sing in</legend>
 
@@ -35,10 +37,11 @@
 
 					<button type="submit" class="pure-button pure-button-primary">Sign
 						in</button>
+					<button type="reset" class="pure-button button-warning">Clean</button>
 				</fieldset>
 			</form>
 			
-			<form class="pure-form pure-form-stacked">
+			<form id="form-singon" class="pure-form pure-form-stacked hidden">
                 <fieldset>
                     <legend>Sing on</legend>
 
@@ -48,12 +51,17 @@
                     <input id="password" type="password" placeholder="Password">
 
                     <button type="submit" class="pure-button pure-button-primary">Sign
-                        in</button>
+                        On</button>
+                    <button type="reset" class="pure-button button-warning">Clean</button>
                 </fieldset>
             </form>
-
 		</div>
-		<div class="pure-u-1-3"></div>
 	</div>
+	<script>
+	    var alreadySingedButton = document.getElementById("btn-already-signed");
+	    alreadySingedButton.onclick = function(e){
+	        alert("HADUKEN");
+	    }
+	</script>
 </body>
 </html>
