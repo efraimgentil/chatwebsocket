@@ -2,7 +2,7 @@ package br.com.efraimgentil.chat_websocket.model;
 
 import java.io.Serializable;
 
-import br.com.efraimgentil.chat_websocket.model.constants.UserType;
+import br.com.efraimgentil.chat_websocket.model.constant.UserType;
 
 public class User implements Serializable {
   

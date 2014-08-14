@@ -32,10 +32,11 @@
         </form>
     </div>
     <script type="text/javascript">
+         var hostPath = location.host;
+         var isRuningOnOpenshift = hostPath.indexOf("rhcloud.com") >= 0;
          window.onload = function(){
         	 var chat = null; 
-        	 var hostPath = location.host;
-        	 var isRuningOnOpenshift = hostPath.indexOf("rhcloud.com") >= 0;
+        	 
         	 
         	 var btnConectar = document.getElementById("btn-conectar");
         	 
@@ -70,10 +71,11 @@
          
          function Chat(){
              this.port = isRuningOnOpenshift ? 8000 : 8080;
-        	 this.wsUri = "ws://" + location.host + + ":" + this.port + "${pageContext.request.contextPath}/chat"; 
+        	 this.wsUri = "ws://" + location.host + "${pageContext.request.contextPath}/speak/?teste=EFraimGEntil"; 
 
         	 this.conectar = function(usuario){
-        		 this.websocket = new WebSocket(this.wsUri + "/" + usuario);
+        		 //this.websocket = new WebSocket(this.wsUri + "/" + usuario);
+        		 this.websocket = new WebSocket(this.wsUri);
         		 this.websocket.onopen = this.abrindoConexao;
         		 this.websocket.onclose = this.fechandoConexao;
         		 this.websocket.onmessage = this.receberMensagem;

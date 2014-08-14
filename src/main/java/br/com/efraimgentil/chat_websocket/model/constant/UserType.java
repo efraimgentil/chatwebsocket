@@ -1,4 +1,4 @@
-package br.com.efraimgentil.chat_websocket.model.constants;
+package br.com.efraimgentil.chat_websocket.model.constant;
 
 public enum UserType {
   
