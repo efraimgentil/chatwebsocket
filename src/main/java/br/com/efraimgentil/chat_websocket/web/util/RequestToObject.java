@@ -22,7 +22,9 @@ public class RequestToObject {
             fieldName = objectParamPrefix + "." + fieldName;
           }
           try {
-            field.set(newInstance, req.getParameter(fieldName) );
+            if(req.getParameterMap().containsKey(fieldName )){
+              field.set(newInstance, req.getParameter(fieldName) );
+            }
           } catch (IllegalArgumentException | IllegalAccessException e) {
             System.out.println("Tipo de atribuido ao parametro invalido");
             e.printStackTrace();

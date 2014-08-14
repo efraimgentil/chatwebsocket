@@ -22,6 +22,15 @@ public class User implements Serializable {
     this.password = password;
   }
   
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("User [id=").append(id).append(", username=").append(username)
+        .append(", email=").append(email).append(", password=").append(password)
+        .append(", userType=").append(userType).append("]");
+    return builder.toString();
+  }
+
   public Integer getId() {
     return id;
   }

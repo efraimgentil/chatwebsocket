@@ -24,7 +24,8 @@
 				<button id="btn-not-signed" class="button-error pure-button">No</button>
 			</div>
 
-			<form id="form-singin" class="pure-form pure-form-stacked hidden">
+			<form id="form-singin" class="pure-form pure-form-stacked hidden"
+			     action="${pageContext.request.contextPath}/singin" method="post" >
 				<fieldset>
 					<legend>Sing in</legend>
 
@@ -41,27 +42,38 @@
 				</fieldset>
 			</form>
 			
-			<form id="form-singon" class="pure-form pure-form-stacked hidden">
+			<form id="form-singon" class="pure-form pure-form-stacked hidden"
+			  action="${pageContext.request.contextPath}/login" method="post">
                 <fieldset>
                     <legend>Sing on</legend>
 
                     <label for="email">Email</label>
-                    <input id="email" type="email" placeholder="Email">
+                    <input id="email" type="email" placeholder="Email" name="user.email">
                     <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Password">
+                    <input id="password" type="password" placeholder="Password" name="user.password">
 
-                    <button type="submit" class="pure-button pure-button-primary">Sign
-                        On</button>
+                    <button type="submit" class="pure-button pure-button-primary">Sign On</button>
                     <button type="reset" class="pure-button button-warning">Clean</button>
                 </fieldset>
             </form>
 		</div>
 	</div>
 	<script>
+	   (function(){
 	    var alreadySingedButton = document.getElementById("btn-already-signed");
 	    alreadySingedButton.onclick = function(e){
-	        alert("HADUKEN");
+		    var formSingon = document.getElementById("form-singon");
+		    formSingon.classList.remove("hidden");
+		    document.getElementById("initialQuestion").classList.add("hidden");
 	    }
+
+	    var notSingnedButton = document.getElementById("btn-not-signed");
+	    notSingnedButton.onclick = function(){
+	    	var formSingon = document.getElementById("form-singin");
+            formSingon.classList.remove("hidden")
+            document.getElementById("initialQuestion").classList.add("hidden");
+		}
+	   }());
 	</script>
 </body>
 </html>

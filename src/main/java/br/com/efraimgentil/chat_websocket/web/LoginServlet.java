@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.com.efraimgentil.chat_websocket.model.User;
+import br.com.efraimgentil.chat_websocket.web.util.RequestToObject;
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
@@ -23,6 +26,10 @@ public class LoginServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
+    
+    User user = RequestToObject.readObjectInRequest( User.class , req  , "user");
+    System.out.println( user );
+    
     super.doPost(req, resp);
   }
   
