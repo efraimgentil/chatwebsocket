@@ -4,7 +4,8 @@ import javax.servlet.http.HttpSession;
 
 public class AuthenticatedUser {
 
-  private final String AUTHENTICATED_KEY = "authenticated";
+  public static final String AUTHENTICATED_KEY = "authenticated";
+  public static final String USER_KEY = "user";
   
   private HttpSession session;
   
