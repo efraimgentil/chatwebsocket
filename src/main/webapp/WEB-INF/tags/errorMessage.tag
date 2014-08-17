@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ attribute name="attribute" required="true" type="java.lang.String" %>
 
-<c:if test="${attribute != null}" >
+<c:if test="${attribute != null && not empty attribute}" >
     <div class="error">
         <span class="error-message">${attribute}</span>
     </div>
