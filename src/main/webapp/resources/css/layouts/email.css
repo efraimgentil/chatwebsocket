@@ -2,11 +2,11 @@
  * -- BASE STYLES --
  * Most of these are inherited from Base, but I want to change a few.
  */
-html, body{
+html, body {
 	width: 100%;
 	height: 100%;
 }
- 
+
 body {
 	color: #333;
 }
@@ -16,12 +16,12 @@ a {
 	color: #1b98f8;
 }
 
-table , tr , td{
+table, tr, td {
 	border: 0px;
 	border-spacing: 0px;
 }
 
-.hidden{
+.hidden {
 	display: none !important;
 }
 
@@ -242,34 +242,29 @@ table , tr , td{
 	height: 40px;
 }
 
-
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
  * of the mobile styles.
  */
 @media ( max-width : 39em) {
-	
-	input{
-	   width: 100%;
-	   padding-right: 1em;
-	   padding-left: 1em;
+	input {
+		width: 100%;
+		padding-right: 1em;
+		padding-left: 1em;
 	}
-	#login{
-	   margin: 0.5em !important;
+	#login {
+		margin: 0.5em !important;
 	}
-	
-	button{
-	   margin-top: 0.3em;
-       display: block;
-       width : 100%;
-       font-size: 125% !important;
+	button {
+		margin-top: 0.3em;
+		display: block;
+		width: 100%;
+		font-size: 125% !important;
 	}
-	
-	#btn-already-signed , #btn-not-signed{
-	   
+	#btn-already-signed, #btn-not-signed {
+		
 	}
-	
 }
 
 /*
@@ -330,11 +325,11 @@ table , tr , td{
  * of the mobile styles.
  */
 @media ( min-width : 60em) {
-	#login{
-	   width: 600px;
-	   position: absolute;
-	   left: 50%;
-	   margin-left: -300px;
+	#login {
+		width: 600px;
+		position: absolute;
+		left: 50%;
+		margin-left: -300px;
 	}
 	/* This will take up the entire height, and be a little thinner */
 	#list {
@@ -353,10 +348,33 @@ table , tr , td{
 		height: 100%;
 		padding-right: 10px;
 	}
-	
-	#area{
-	   border: 1px solid #ddd;
-	   height: 100%;
-	   overflow-y: scroll;
+	#area {
+		border: 1px solid #ddd;
+		height: 100%;
+		overflow-y: scroll;
+	}
+	#table-chat {
+		height: 100%;
+		width: 100%
+	}
+	#td-chat-title {
+		height: 120px;
+	}
+	#td-chat-area {
+		border: 1px solid #ddd;
+		vertical-align: top;
+	}
+	#tr-chat-form {
+		height: 100px;
+	}
+	#tr-chat-form td {
+		vertical-align: top;
+	}
+	#tr-chat-form div {
+		margin-top: 2px;
+	}
+	#tr-chat-form text-area {
+		resize: none;
+		width: 100%;
 	}
 }

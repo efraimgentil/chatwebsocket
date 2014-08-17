@@ -19,7 +19,7 @@
 </head>
 <body>
 	<fmt:setBundle basename="messages" />
-
+    
 	<div id="layout" class="content pure-g" style="height: 100%">
 		<div id="list" class="pure-u-1">
 			<div class="email-item email-item-selected pure-g">
