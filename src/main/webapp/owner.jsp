@@ -20,7 +20,7 @@
 <body>
 	<fmt:setBundle basename="messages" />
 
-	<div id="layout" class="content pure-g">
+	<div id="layout" class="content pure-g" style="height: 100%">
 		<div id="list" class="pure-u-1">
 			<div class="email-item email-item-selected pure-g">
 				<div class="pure-u">
@@ -35,14 +35,32 @@
 		</div>
 		
 		<div id="main" class="pure-u-1">
-		      <div class="email-content">
-		          <div id="area">
-		              HAHA
-		          </div>
-		          <div id="action-area" >
-		          
-		          </div>
-		      </div>
+		  <table style="height: 100%; width:100%">
+		      <tr>
+		          <td style="border: 1px solid #ddd; vertical-align: top;">
+		             <div id="area" >
+                      <p>HAHA</p>
+                     </div>
+		          </td>
+		      </tr>
+		      <tr height="100px" >
+                  <td style="vertical-align: top">
+                    <form action="">
+                        <div style="margin-top: 2px">
+                            <textarea rows="" cols="" style="resize: none; width: 100%"></textarea>
+                        </div>
+                        <div style="margin-top: 2px">
+                        <button>Send</button>
+                        <button>Clean</button>
+                        </div>
+                    </form>
+                  </td>
+              </tr>
+		  </table>
+<!-- 		      <div class="email-content"> -->
+<!-- 		          <div id="action-area" > -->
+<!-- 		          </div> -->
+<!-- 		      </div> -->
 		</div>
 	</div>
 	

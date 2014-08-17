@@ -16,6 +16,11 @@ a {
 	color: #1b98f8;
 }
 
+table , tr , td{
+	border: 0px;
+	border-spacing: 0px;
+}
+
 .hidden{
 	display: none !important;
 }
@@ -351,5 +356,7 @@ a {
 	
 	#area{
 	   border: 1px solid #ddd;
+	   height: 100%;
+	   overflow-y: scroll;
 	}
 }
