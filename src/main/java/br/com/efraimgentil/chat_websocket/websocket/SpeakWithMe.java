@@ -23,7 +23,8 @@ public class SpeakWithMe {
   
   @OnError
   public void error(Throwable e){
-    System.out.println( " NA NA NA ");
+    System.out.println( "Sorry but there is a error, closing!" );
+    System.out.println( e.getMessage() );
   }
   
   

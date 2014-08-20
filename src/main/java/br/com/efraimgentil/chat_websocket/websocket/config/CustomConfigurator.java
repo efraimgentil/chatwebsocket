@@ -24,8 +24,8 @@ public class CustomConfigurator extends ServerEndpointConfig.Configurator {
     if( authenticatedUser.isAuthenticated() ){
       sec.getUserProperties().put("HTTP_SESSION",  httpSession );
     }else{
-      
-      response.getHeaders().put(response.SEC_WEBSOCKET_ACCEPT , new ArrayList<String>() );
+//      response.getHeaders().put( response.SEC_WEBSOCKET_ACCEPT , new ArrayList<String>() );
+      throw new RuntimeException(" NIH ");
     }
   }
   

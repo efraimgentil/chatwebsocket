@@ -49,5 +49,14 @@
 			</td>
 		</tr>
 	</table>
+	
+	<script type="text/javascript">
+        var options = { 
+        	    wsUri : prepareURI("${cPath}"),
+        	    messageArea: "td-chat-area"
+        	    }
+        var cws = new CWS( options );
+        cws.connect();
+	</script>
 </body>
 </html>
