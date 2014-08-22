@@ -16,13 +16,19 @@ public class Chat {
   private UserSession owner;
   
   public void connectUser( User user , Session session ) throws IOException, EncodeException{
+    session.getBasicRemote().sendObject( Message.infoMessage("You are now connected") );
+    
     UserSession userSession = new UserSession(user, session);
     if( isOwner(user) ){
       owner = userSession;
+      for (Session otherSession : session.getOpenSessions()) {
+        if(!otherSession.getId().equals( session.getId() )){
+          otherSession.getBasicRemote().sendObject( Message.infoMessage("The chat owner is now online") );
+        }
+      }
     }else{
-      session.getBasicRemote().sendObject( new Message( "SYSTEM", new Date() , "You are now connected"  ) );
       if(owner == null){
-        session.getBasicRemote().sendObject( new Message( "SYSTEM", new Date() , "Sorry to inform you but owner of this chat is offline"  ));
+        session.getBasicRemote().sendObject( Message.infoMessage("Sorry to inform you but owner of this chat is offline") );
       }
     }
   }

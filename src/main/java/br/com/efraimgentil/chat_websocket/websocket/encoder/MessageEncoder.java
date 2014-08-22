@@ -32,6 +32,7 @@ public class MessageEncoder implements Encoder.Text<Message> {
     generator.write( "userWhoSend" , object.getUserWhoSend() );
     generator.write( "date" ,  sdf.format( object.getDate() ) );
     generator.write( "body" , object.getBody() );
+    generator.write( "type" , object.getType().toString() );
     generator.writeEnd().flush();
     return writer.toString();
   }

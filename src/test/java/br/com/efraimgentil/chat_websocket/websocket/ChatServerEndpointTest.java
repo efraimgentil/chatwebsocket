@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import br.com.efraimgentil.chat_websocket.chat.Chat;
 import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
+import br.com.efraimgentil.chat_websocket.model.constant.MessageType;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
