@@ -1,10 +1,13 @@
 package br.com.efraimgentil.chat_websocket.speakwithme;
 
 import java.io.IOException;
+import java.util.Date;
 
+import javax.websocket.EncodeException;
 import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 
+import br.com.efraimgentil.chat_websocket.model.Message;
 import br.com.efraimgentil.chat_websocket.model.User;
 import br.com.efraimgentil.chat_websocket.model.constant.UserType;
 
@@ -12,12 +15,15 @@ public class Chat {
   
   private UserSession owner;
   
-  public void connectUser( User user , Session session ){
+  public void connectUser( User user , Session session ) throws IOException, EncodeException{
     UserSession userSession = new UserSession(user, session);
     if( isOwner(user) ){
       owner = userSession;
     }else{
-      
+      session.getBasicRemote().sendObject( new Message( "SYSTEM", new Date() , "You are now connected"  ) );
+      if(owner == null){
+        session.getBasicRemote().sendObject( new Message( "SYSTEM", new Date() , "Sorry to inform you but owner of this chat is offline"  ));
+      }
     }
   }
   

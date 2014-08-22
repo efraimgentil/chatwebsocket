@@ -23,6 +23,7 @@ public class CustomConfigurator extends ServerEndpointConfig.Configurator {
     AuthenticatedUser authenticatedUser = new AuthenticatedUser(httpSession);
     if( authenticatedUser.isAuthenticated() ){
       sec.getUserProperties().put("HTTP_SESSION",  httpSession );
+      sec.getUserProperties().put("hey", "SUB NIGA");
     }else{
 //      response.getHeaders().put( response.SEC_WEBSOCKET_ACCEPT , new ArrayList<String>() );
       throw new RuntimeException(" NIH ");

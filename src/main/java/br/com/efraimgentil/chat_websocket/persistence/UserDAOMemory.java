@@ -27,7 +27,7 @@ public class UserDAOMemory implements UserDAO {
     User u = new User();
     u.setEmail(email);
     u.setUsername(email);
-    u.setUserType( UserType.OWNER );
+    u.setUserType( UserType.GUEST );
     return u;
   }
   

@@ -16,8 +16,14 @@ var CWS = function(options ) {
 		onOpen : function() {
 			console.log("CONNECT");
 		},
-		onMessage : function(data) {
+		onMessage : function(message) {
 			console.log("MESSAGE ");
+			console.log( message.data );
+			var json = JSON.parse(message.data);
+			if(json.userWhoSend === "SYSTEM"){
+				cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body );
+			}
+			console.log( json );
 		},
 		onClose : function(data){
 			console.log("CLOSE");

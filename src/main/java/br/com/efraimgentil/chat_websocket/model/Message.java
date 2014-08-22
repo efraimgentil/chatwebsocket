@@ -11,6 +11,15 @@ public class Message implements Serializable {
   private Date date;
   private String body;
  
+  public Message() {  }
+  
+  public Message(String userWhoSend, Date date, String body) {
+    super();
+    this.userWhoSend = userWhoSend;
+    this.date = date;
+    this.body = body;
+  }
+
   public String getUserWhoSend() {
     return userWhoSend;
   }
