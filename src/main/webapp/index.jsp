@@ -71,11 +71,10 @@
          
          function Chat(){
              this.port = isRuningOnOpenshift ? 8000 : 8080;
-        	 this.wsUri = "ws://" + location.host + "${pageContext.request.contextPath}/speak/?teste=EFraimGEntil"; 
+        	 this.wsUri = "ws://" + location.host + "${pageContext.request.contextPath}/chat"; 
 
         	 this.conectar = function(usuario){
-        		 //this.websocket = new WebSocket(this.wsUri + "/" + usuario);
-        		 this.websocket = new WebSocket(this.wsUri);
+        		 this.websocket = new WebSocket(this.wsUri + "/" + usuario);
         		 this.websocket.onopen = this.abrindoConexao;
         		 this.websocket.onclose = this.fechandoConexao;
         		 this.websocket.onmessage = this.receberMensagem;
