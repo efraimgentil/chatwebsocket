@@ -1,5 +1,12 @@
 package br.com.efraimgentil.chat_websocket.websocket;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import java.io.IOException;
 
 import javax.websocket.CloseReason;
@@ -13,9 +20,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import br.com.efraimgentil.chat_websocket.chat.Chat;
 import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
-import br.com.efraimgentil.chat_websocket.model.constant.MessageType;
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ChatServerEndpointTest {

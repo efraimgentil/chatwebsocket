@@ -1,13 +1,21 @@
 package br.com.efraimgentil.chat_websocket.chat;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.websocket.RemoteEndpoint;
 import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 
@@ -19,8 +27,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import br.com.efraimgentil.chat_websocket.chat.exception.SemDestinatarioException;
 import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 /**
  * 
@@ -75,6 +81,7 @@ public class ChatTest {
         verify( remote , atLeastOnce() ).sendText( anyString() );
     }
     
+    @SuppressWarnings("unchecked")
     @Test
     public void dadoUmUsuarioLivreDeveSetarONomeDoUsuarioNaSessao() throws UsuarioEmUsoException, IOException{
         final String USUARIO = "usuario";
@@ -120,9 +127,9 @@ public class ChatTest {
         verify( remote , times(2) ).sendText( anyString() );
     }
     
+    @SuppressWarnings("unchecked")
     @Test
     public void dadoUmaSessaoDeveRetornarOutrasSessoesAbertasExluindoASessaoDada() throws IOException{
-        final String USUARIO = "USUARIO_CHAT";
         Set<Session> sessoes = mock(Set.class);
         when( session.getOpenSessions() ).thenReturn( sessoes );
         
@@ -159,11 +166,13 @@ public class ChatTest {
         assertEquals("Deveria retornar o usuário destinatario da mensagem", USUARIO , usuarioDestinatario);
     }
     
+    @SuppressWarnings("unused")
     @Test(expected = SemDestinatarioException.class)
     public void dadoUmMensagemPrivadaQueNaoSejaPossivelExtrairOUsuarioDestinoDeveLancarExecao() throws SemDestinatarioException{
         String USUARIO  = "";
         String mensagemPrivada = "\\" + USUARIO + " mensagem privada";
         
         String usuarioDestinatario = chat.getDestinatarioMensagemPrivada(mensagemPrivada);
+        //nao deve passar desse ponto
     }
 }

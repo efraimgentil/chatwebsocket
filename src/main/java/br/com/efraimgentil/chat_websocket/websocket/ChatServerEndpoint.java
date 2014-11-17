@@ -15,8 +15,11 @@ import br.com.efraimgentil.chat_websocket.chat.Chat;
 import br.com.efraimgentil.chat_websocket.chat.exception.UsuarioEmUsoException;
 
 /**
- * 
  * @author Efraim Gentil (efraim.gentil@gmail.com)
+ * 
+ * Anotação @ServerEndpoint sinaliza a rota de entrada no websocket
+ * no momento do startup da aplicação a anotação sera identificada e o
+ * endpoint validado e preparado para uso
  */
 @ServerEndpoint("/chat/{user_name}")
 public class ChatServerEndpoint {
@@ -31,6 +34,13 @@ public class ChatServerEndpoint {
     this.chat = chat;
   }
 
+  /**
+   * No momento em que um usuário se conecta ao enpoint, o metodo anotado
+   * com a anotação @OnOpen será chamado, sinalizando o inicio de uma nova conexão com 
+   * um cliente
+   * @param usuario
+   * @param session
+   */
   @OnOpen
   public void abrir(@PathParam("user_name") String usuario, Session session) {
     try {
@@ -45,6 +55,14 @@ public class ChatServerEndpoint {
     }
   }
 
+  
+  /**
+   * Toda mensagem enviada por um cliente passara por esse metodo, obrigatóriamente
+   * o metodo deve ter um parametro do tipo byte[] ou string que recebera a mensagem
+   * o Session é opcional, mas serve para ter a referencia de quem enviou a mensagem 
+   * @param mensagem
+   * @param userSession
+   */
   @OnMessage
   public void mensagem(String mensagem, Session userSession) {
     try {
@@ -54,6 +72,11 @@ public class ChatServerEndpoint {
     }
   }
 
+  /**
+   * No momento em que um cliente fecha a sessão o metodo anotado com @OnClose sera
+   * chamado
+   * @param userSession
+   */
   @OnClose
   public void fechar(Session userSession) {
     chat.desconectarUsuario(userSession);

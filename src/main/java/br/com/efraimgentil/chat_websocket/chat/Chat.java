@@ -1,15 +1,10 @@
 package br.com.efraimgentil.chat_websocket.chat;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.json.Json;
-import javax.json.stream.JsonGenerator;
 import javax.websocket.Session;
 
 import br.com.efraimgentil.chat_websocket.chat.exception.SemDestinatarioException;
@@ -24,7 +19,6 @@ public class Chat {
 
     public static final String ATTR_USUARIO = "usuario";
     public static final String NO_USERNAME = "";
-//    public static Map<String, Session> usernameSession = new LinkedHashMap<>();
 
     private final Pattern patternUsuarioDestino = Pattern
             .compile("^\\\\[\\w\\.]+");
